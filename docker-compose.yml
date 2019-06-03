@@ -1,0 +1,55 @@
+version: '3'
+services:
+  config:
+    container_name: connect-config
+    image: nuclias/connect-config
+    volumes:
+      - connect-config-volume:/etc/connect
+      - connect-log-volume:/var/log/connect
+  mongo:
+    container_name: connect-mongo
+    image: nuclias/connect-mongo:latest
+    restart: always
+    ports:
+      - "27010:27010"
+    volumes:
+      - connect-mongo-volume:/data/db
+      - connect-config-volume:/etc/connect
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=admin
+    depends_on:
+      - config
+    command: mongod --bind_ip_all --port 27010 --auth
+  core:
+    container_name: connect-core
+    image: nuclias/connect-core
+    restart: always
+    ports:
+      - '8443:8443'
+      - '62992:62992'
+    volumes:
+      - connect-config-volume:/etc/connect
+      - connect-log-volume:/var/log/connect
+    depends_on:
+      - mongo
+    command: sh -c "ln -sf /etc/connect/appconfig.json /app/config/appconfig.json && ln -sf /var/log/connect/core /app/logFiles && ./nc-core"
+    privileged: true
+  web:
+    container_name: connect-web
+    image: 'nuclias/connect-web'
+    restart: 'always'
+    ports:
+      - '30001:30001'
+    volumes:
+      - connect-config-volume:/etc/connect
+      - connect-log-volume:/var/log/connect
+      - './customer:/app/customer'
+    depends_on:
+      - core
+    command: sh -c "ln -sf /etc/connect/systemconfig.json /app/config/systemconfig.json && ln -sf /var/log/connect/web /app/logFiles && ./nc-web"
+    privileged: true 
+volumes:
+  connect-config-volume:
+  connect-mongo-volume:
+  connect-log-volume:
