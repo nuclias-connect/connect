@@ -20,7 +20,7 @@ services:
 #    environment:
 #      - NODE_ENV=Production_hualian
     container_name: nuclias_connect_core 
-    image: 'nuclias/nuclias_connect_core'
+    image: 'nuclias/nuclias_connect_core:1.0.0.36'
     restart: 'always'
     ports:
       - '8443:8443'
@@ -40,7 +40,7 @@ services:
 #    environment:
 #      - NODE_ENV=Production_hualian
     container_name: nuclias_connect_web
-    image: 'nuclias/nuclias_connect_web'
+    image: 'nuclias/nuclias_connect_web:1.0.0.36'
     restart: 'always'
     ports:
       - '30001:30001'
