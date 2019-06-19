@@ -209,8 +209,8 @@ if [ "$k" = "y" ];then
 					echo -e "\033[31mConfirm password is not consistent\033[0m"
 					exit 1
 				else
-					sed -i "5c db.createUser({user:'"$name"', pwd:'"$pwd1"', roles:[{role:'root',db:'admin'}]});" $SHELL_FOLDER"/entrypoint-initdb.sh"
-					sed -i "6c db.auth('"$name"','"$pwd1"');" $SHELL_FOLDER"/entrypoint-initdb.sh"
+					sed -i "5c db.createUser({user:'"$name"', pwd:'"$pwd1"', roles:[{role:'root',db:'admin'}]});" "/tmp/nuclias_connect/entrypoint-initdb.sh"
+					sed -i "6c db.auth('"$name"','"$pwd1"');" "/tmp/nuclias_connect/entrypoint-initdb.sh"
 				fi
 		else
 			echo -e "\033[31mThe input password is empty\033[0m"
