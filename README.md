@@ -14,5 +14,5 @@ Running Nuclias Connect by using docker compose.
 ### Ubuntu
 
 ```bash
-curl -L https://raw.githubusercontent.com/nuclias-connect/connect/master/install.sh | sudo sh
+curl -L https://raw.githubusercontent.com/nuclias-connect/connect/dev/install.sh | sudo sh
 ```

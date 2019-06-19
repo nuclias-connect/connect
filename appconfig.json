@@ -1,0 +1,10 @@
+
+{
+    "serverPort": 8443,
+    "serverIP":"",
+    "mongodb": {
+        "serverIP": "127.0.0.1",
+        "serverPort": 27010,
+        "useAuth": true
+    }
+}
