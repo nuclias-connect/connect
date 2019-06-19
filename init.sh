@@ -45,9 +45,9 @@ elif [ "$(expr substr $(uname -s) 1 5)" = "Linux" ]; then
 	SYS="Linux"
     if grep -Eqii "CentOS" /etc/issue || grep -Eq "CentOS" /etc/*-release; then
         DISTRO='CentOS'
-		firewall-cmd --zone=public --add-port=8443/tcp --permanent
-		firewall-cmd --zone=public --add-port=30001/tcp --permanent
-		firewall-cmd --reload
+        firewall-cmd --zone=public --add-port=30001/tcp --permanent
+        firewall-cmd --zone=public --add-port=8443/tcp --permanent
+        firewall-cmd --reload
     elif grep -Eqi "Red Hat Enterprise Linux Server" /etc/issue || grep -Eq "Red Hat Enterprise Linux Server" /etc/*-release; then
         DISTRO='RHEL'
     elif grep -Eqi "Aliyun" /etc/issue || grep -Eq "Aliyun" /etc/*-release; then
@@ -56,14 +56,14 @@ elif [ "$(expr substr $(uname -s) 1 5)" = "Linux" ]; then
         DISTRO='Fedora'
     elif grep -Eqi "Debian" /etc/issue || grep -Eq "Debian" /etc/*-release; then
         DISTRO='Debian'
-		ufw allow 8443/tcp
-		ufw allow 30001/tcp
-		ufw reload
+        ufw allow 30001/tcp
+        ufw allow 8443/tcp
+        ufw reload
     elif grep -Eqi "Ubuntu" /etc/issue || grep -Eq "Ubuntu" /etc/*-release; then
         DISTRO='Ubuntu'
-		ufw allow 8443/tcp
-		ufw allow 30001/tcp
-		ufw reload
+        ufw allow 30001/tcp
+        ufw allow 8443/tcp
+        ufw reload
     elif grep -Eqi "Raspbian" /etc/issue || grep -Eq "Raspbian" /etc/*-release; then
         DISTRO='Raspbian'
     else
@@ -121,6 +121,46 @@ if [ $check_docker_status -eq 1 ]
 	# @ todo start docker
 fi
 echo -e "docker sevice is running\033[0m"
+
+echo -e "\033[36m(5/11)---- check core image ----\033[0m"
+check_image_core=`docker images nuclias/nuclias_connect_core | wc -l`
+echo "message: $check_image_core"
+if [ $check_image_core -eq 1 ]
+	then echo "start down core image"
+	if [ ! -f $SHELL_FOLDER"/images/core.tar" ]
+		then echo -e "\033[31m not found core image\033[0m"
+	exit 1
+	fi
+	load_core=`docker load < $SHELL_FOLDER/images/core.tar`
+fi
+echo -e "\033[32mcore image is existed\033[0m"
+
+
+echo -e "\033[36m(6/11)---- check web image ----\033[0m"
+check_image_web=`docker images nuclias/nuclias_connect_web | wc -l`
+echo "message: $check_image_web"
+if [ $check_image_web -eq 1 ]
+	then echo "start down web image"
+	if [ ! -f $SHELL_FOLDER"/images/web.tar" ]
+		then echo -e "\033[31m not found core image\033[0m"
+		exit 1
+	fi
+	load_web=`docker load < $SHELL_FOLDER/images/web.tar`
+fi
+echo -e "\033[32mweb image is existed\033[0m"
+
+echo -e "\033[36m(7/11)---- check mongo image ----\033[0m"
+check_image_mongo=`docker images mongo:3.6.11 | wc -l`
+echo "message: $check_image_mongo"
+if [ $check_image_mongo -eq 1 ]
+	then echo "start find mongo image"
+	if [ ! -f $SHELL_FOLDER"/images/mongo.tar" ]
+		then echo -e "\033[31m not found mongo image\033[0m"
+		exit 1
+	fi
+	load_mongo=`docker load < $SHELL_FOLDER/images/mongo.tar`
+fi
+echo -e "\033[32mmongo image is existed\033[0m"
 
 echo -e "\033[36m(8/11)---- check web_port ----\033[0m"
 check_web_port_free=`lsof -i:$web_port | wc -l`
