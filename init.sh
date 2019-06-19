@@ -33,7 +33,7 @@ echo "
                                                                                                                         
                                                                                                                         "
 
-echo "############## Welcome use Nuclias ###############"
+echo "########## Welcome use Nuclias Connect ###############"
 echo "                     --                           "
 echo "                     --                           "
 echo "                     --                           "
@@ -122,47 +122,7 @@ if [ $check_docker_status -eq 1 ]
 fi
 echo -e "docker sevice is running\033[0m"
 
-echo -e "\033[36m(5/11)---- check core image ----\033[0m"
-check_image_core=`docker images nuclias/nuclias_connect_core | wc -l`
-echo "message: $check_image_core"
-if [ $check_image_core -eq 1 ]
-	then echo "start down core image"
-	if [ ! -f $SHELL_FOLDER"/images/core.tar" ]
-		then echo -e "\033[31m not found core image\033[0m"
-	exit 1
-	fi
-	load_core=`docker load < $SHELL_FOLDER/images/core.tar`
-fi
-echo -e "\033[32mcore image is existed\033[0m"
-
-
-echo -e "\033[36m(6/11)---- check web image ----\033[0m"
-check_image_web=`docker images nuclias/nuclias_connect_web | wc -l`
-echo "message: $check_image_web"
-if [ $check_image_web -eq 1 ]
-	then echo "start down web image"
-	if [ ! -f $SHELL_FOLDER"/images/web.tar" ]
-		then echo -e "\033[31m not found core image\033[0m"
-		exit 1
-	fi
-	load_web=`docker load < $SHELL_FOLDER/images/web.tar`
-fi
-echo -e "\033[32mweb image is existed\033[0m"
-
-echo -e "\033[36m(7/11)---- check mongo image ----\033[0m"
-check_image_mongo=`docker images mongo:3.6.11 | wc -l`
-echo "message: $check_image_mongo"
-if [ $check_image_mongo -eq 1 ]
-	then echo "start find mongo image"
-	if [ ! -f $SHELL_FOLDER"/images/mongo.tar" ]
-		then echo -e "\033[31m not found mongo image\033[0m"
-		exit 1
-	fi
-	load_mongo=`docker load < $SHELL_FOLDER/images/mongo.tar`
-fi
-echo -e "\033[32mmongo image is existed\033[0m"
-
-echo -e "\033[36m(8/11)---- check web_port ----\033[0m"
+echo -e "\033[36m(5/11)---- check web_port ----\033[0m"
 check_web_port_free=`lsof -i:$web_port | wc -l`
 echo "message: $check_web_port_free"
 if [ $check_web_port_free -eq 0 ]
@@ -172,7 +132,7 @@ else
 	exit 1
 fi
 
-echo -e "\033[36m(9/11)---- check core_port ----\033[0m"
+echo -e "\033[36m(6/11)---- check core_port ----\033[0m"
 check_core_port_free=`lsof -i:$core_port | wc -l`
 echo "message: $check_core_port_free"
 if [ $check_core_port_free -eq 0 ]
@@ -182,7 +142,7 @@ else
 	exit 1
 fi
 
-echo -e "\033[36m(10/11)---- check mongo_port ----\033[0m"
+echo -e "\033[36m(7/11)---- check mongo_port ----\033[0m"
 for port in 27010 27017
 do
 	check_mongo_port_free=`lsof -i:$port | wc -l`
@@ -195,7 +155,7 @@ do
 	fi
 done
 
-echo -e "\033[36m(11/11)---- check file and directory ----\033[0m"
+echo -e "\033[36m(8/11)---- check file and directory ----\033[0m"
 if [ ! -f $SHELL_FOLDER"/docker-compose.yml" ]
 	then echo -e "\033[31m not found docker-compose.yml\033[0m"
 	exit 1
@@ -237,7 +197,7 @@ fi
 echo -e "\033[32mcheck file finished\033[0m"
 echo -e "\033[32mall check_job finished\033[0m"
 echo ""
-echo -e "\033[36mNow initial set the database administrator account for Nuclias,
+echo -e "\033[36mNow initial set the database administrator account for Nuclias Connect,
 please confirm is the first time set administrator account? [y/n]\033[0m"
 read k
 if [ "$k" = "y" ];then
@@ -265,7 +225,7 @@ fi
 
 
 docker-compose up -d
-echo -e "\033[32mNuclias services are running...\033[0m"
+echo -e "\033[32mNuclias Connect services are running...\033[0m"
 echo ""
 echo "-- commands list -----------------------"
 echo "|                                       |"
