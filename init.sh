@@ -38,7 +38,7 @@ echo "                     --                           "
 echo "                     --                           "
 echo "                     --                           "
 sleep 3s
-echo -e "\033[36m(1/11)---- check your system type ----\033[0m"
+echo -e "\033[36m(1/8)---- check your system type ----\033[0m"
 if [ "$(uname)" = "Darwin" ]
 	then SYS="OS X"
 elif [ "$(expr substr $(uname -s) 1 5)" = "Linux" ]; then
@@ -76,7 +76,7 @@ echo "SYSTEM：$SYS $DISTRO"
 echo -e "\033[32mcheck system finished\033[0m"
 
 
-echo -e "\033[36m(2/11)---- check docker ----\033[0m"
+echo -e "\033[36m(2/8)---- check docker ----\033[0m"
 check_docker=`docker -v`
 if [ "$check_docker" ] 
 	then echo "$check_docker"
@@ -99,7 +99,7 @@ else
 fi
 echo -e "\033[32mdocker installed\033[0m"
 
-echo -e "\033[36m(3/11)---- check　docker-compose ----\033[0m"
+echo -e "\033[36m(3/8)---- check　docker-compose ----\033[0m"
 check_docker_compose=`docker-compose -v`
 if [ "$check_docker_compose" ]
 	then echo "$check_docker_compose"
@@ -111,7 +111,7 @@ else
 fi
 echo -e "\033[32mdocker-compose installed\033[0m"
 
-echo -e "\033[36m(4/11)---- check docker status ----\033[0m"
+echo -e "\033[36m(4/8)---- check docker status ----\033[0m"
 check_docker_status=`ps -fe | grep dockerd | wc -l`
 echo "message: $check_docker_status"
 if [ $check_docker_status -eq 1 ]
@@ -122,7 +122,7 @@ if [ $check_docker_status -eq 1 ]
 fi
 echo -e "docker sevice is running\033[0m"
 
-echo -e "\033[36m(5/11)---- check web_port ----\033[0m"
+echo -e "\033[36m(5/8)---- check web_port ----\033[0m"
 check_web_port_free=`lsof -i:$web_port | wc -l`
 echo "message: $check_web_port_free"
 if [ $check_web_port_free -eq 0 ]
@@ -132,7 +132,7 @@ else
 	exit 1
 fi
 
-echo -e "\033[36m(6/11)---- check core_port ----\033[0m"
+echo -e "\033[36m(6/8)---- check core_port ----\033[0m"
 check_core_port_free=`lsof -i:$core_port | wc -l`
 echo "message: $check_core_port_free"
 if [ $check_core_port_free -eq 0 ]
@@ -142,7 +142,7 @@ else
 	exit 1
 fi
 
-echo -e "\033[36m(7/11)---- check mongo_port ----\033[0m"
+echo -e "\033[36m(7/8)---- check mongo_port ----\033[0m"
 for port in 27010 27017
 do
 	check_mongo_port_free=`lsof -i:$port | wc -l`
@@ -155,7 +155,7 @@ do
 	fi
 done
 
-echo -e "\033[36m(8/11)---- check file and directory ----\033[0m"
+echo -e "\033[36m(8/8)---- check file and directory ----\033[0m"
 if [ ! -f $SHELL_FOLDER"/docker-compose.yml" ]
 	then echo -e "\033[31m not found docker-compose.yml\033[0m"
 	exit 1
@@ -197,9 +197,8 @@ fi
 echo -e "\033[32mcheck file finished\033[0m"
 echo -e "\033[32mall check_job finished\033[0m"
 echo ""
-echo -e "\033[36mNow initial set the database administrator account for Nuclias Connect,
-please confirm is the first time set administrator account? [y/n]\033[0m"
-read k
+echo -e "\033[36mNow initial set the database administrator account for Nuclias Connect\033[0m"
+read -p "\033[36mplease confirm is the first time set administrator account? [y/n]:\033[0m" k
 if [ "$k" = "y" ];then
 	read -p "User Name：" name
 	if [ -n "$name" ]; then 
