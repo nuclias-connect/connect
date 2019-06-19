@@ -199,6 +199,7 @@ echo -e "\033[32mall check_job finished\033[0m"
 echo ""
 echo -e "\033[36mNow initial set the database administrator account for Nuclias Connect\033[0m"
 read -p "please confirm is the first time set administrator account? [y/n]:" k
+echo $k
 if [ "$k" = "y" ];then
 	read -p "User Name：" name
 	if [ -n "$name" ]; then 
