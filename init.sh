@@ -45,8 +45,8 @@ elif [ "$(expr substr $(uname -s) 1 5)" = "Linux" ]; then
 	SYS="Linux"
     if grep -Eqii "CentOS" /etc/issue || grep -Eq "CentOS" /etc/*-release; then
         DISTRO='CentOS'
-        firewall-cmd --zone=public --add-port=30001/tcp --permanent
-        firewall-cmd --zone=public --add-port=8443/tcp --permanent
+        firewall-cmd --zone=public --add-port=$web_port/tcp --permanent
+        firewall-cmd --zone=public --add-port=$core_port/tcp --permanent
         firewall-cmd --reload
     elif grep -Eqi "Red Hat Enterprise Linux Server" /etc/issue || grep -Eq "Red Hat Enterprise Linux Server" /etc/*-release; then
         DISTRO='RHEL'
@@ -56,13 +56,13 @@ elif [ "$(expr substr $(uname -s) 1 5)" = "Linux" ]; then
         DISTRO='Fedora'
     elif grep -Eqi "Debian" /etc/issue || grep -Eq "Debian" /etc/*-release; then
         DISTRO='Debian'
-        ufw allow 30001/tcp
-        ufw allow 8443/tcp
+        ufw allow $web_port/tcp
+        ufw allow $core_port/tcp
         ufw reload
     elif grep -Eqi "Ubuntu" /etc/issue || grep -Eq "Ubuntu" /etc/*-release; then
         DISTRO='Ubuntu'
-        ufw allow 30001/tcp
-        ufw allow 8443/tcp
+        ufw allow $web_port/tcp
+        ufw allow $core_port/tcp
         ufw reload
     elif grep -Eqi "Raspbian" /etc/issue || grep -Eq "Raspbian" /etc/*-release; then
         DISTRO='Raspbian'
@@ -198,7 +198,7 @@ echo -e "\033[32mcheck file finished\033[0m"
 echo -e "\033[32mall check_job finished\033[0m"
 echo ""
 echo -e "\033[36mNow initial set the database administrator account for Nuclias Connect\033[0m"
-read -p "\033[36mplease confirm is the first time set administrator account? [y/n]:\033[0m" k
+read -p "please confirm is the first time set administrator account? [y/n]:" k
 if [ "$k" = "y" ];then
 	read -p "User Name：" name
 	if [ -n "$name" ]; then 
