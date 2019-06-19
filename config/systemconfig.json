@@ -1,0 +1,56 @@
+{
+  "version":"1.0.0.35",
+  "nucliasPath":"/home/liufei/cwm-docker/nuclias_connect",
+  "model":"DNC-100",
+  "development":{
+    "enableHttp":false,
+    "serverIP":"",
+    "port":30002,
+    "sslport":30001,
+    "starterEdition":false,
+    "base_url": "",
+    "coreserverpath":"../../DView7-SP1-Core/",
+    "jwt_secret":"b3eaad0a469d13a884f3d09e0952b72b",
+    "client":"*",
+    "taskValidity":30,
+    "supportModuleUrl":" https://s3-us-west-1.amazonaws.com/download-site/download-file/cwm_aplist",
+    "mongoDBPath":"E:\\MongoDB\\Server\\3.4\\bin",
+    "mongodb": {
+      "serverIP": "127.0.0.1",
+      "serverPort": 27010,
+      "useAuth": true
+    }
+
+
+  },
+  "Production_hualian":{
+    "enableHttp":true,
+    "serverIP":"",
+    "port":30002,
+    "sslport":30001,
+    "starterEdition":false,
+    "base_url": "",
+    "coreserverpath":"../../DView7-SP1-Core/",
+    "jwt_secret":"b3eaad0a469d13a884f3d09e0952b72b",
+    "client":"*",
+    "taskValidity":30,
+    "supportModuleUrl":"https://s3-us-west-1.amazonaws.com/download-site/download-file/cwm_aplist_hualien_edu",
+    "mongodb": {
+      "serverIP": "127.0.0.1",
+      "serverPort": 27010,
+      "useAuth": true
+    }
+  },
+  "production":{
+    "enableHttp":true,
+    "port":30002,
+    "sslport":30001,
+    "starterEdition":false,
+    "base_url": "",
+    "coreserverpath":"../../DView7-SP1-Core/",
+    "jwt_secret":"b3eaad0a469d13a884f3d09e0952b72b",
+    "client":"*",
+    "taskValidity":30,
+    "supportModuleUrl":" https://s3-us-west-1.amazonaws.com/download-site/download-file/cwm_aplist"
+  }
+}
