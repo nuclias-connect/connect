@@ -56,9 +56,8 @@ elif [ "$(expr substr $(uname -s) 1 5)" = "Linux" ]; then
         DISTRO='Fedora'
     elif grep -Eqi "Debian" /etc/issue || grep -Eq "Debian" /etc/*-release; then
         DISTRO='Debian'
-        ufw allow $web_port/tcp
-        ufw allow $core_port/tcp
-        ufw reload
+        iptables -A INPUT -p tcp --dport $web_port -j ACCEPT
+        iptables -A INPUT -p tcp --dport $core_port -j ACCEPT
     elif grep -Eqi "Ubuntu" /etc/issue || grep -Eq "Ubuntu" /etc/*-release; then
         DISTRO='Ubuntu'
         ufw allow $web_port/tcp
