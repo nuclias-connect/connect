@@ -21,5 +21,5 @@ curl -L https://raw.githubusercontent.com/nuclias-connect/connect/dev/install.sh
 STEP2: Install Nuclias Connect
 
 cd /tmp/nuclias_connect
-. init.sh
+sh init.sh
 ```
