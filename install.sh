@@ -1,5 +1,6 @@
 #!/bin/bash
-
+user=$1
+pwd=$2
 TMP_NUCLIAS_CONNECT=/tmp/nuclias_connect
 TMP_NUCLIAS_CONNECT_config=/tmp/nuclias_connect/config
 if [ ! -d $TMP_NUCLIAS_CONNECT ];then
@@ -23,10 +24,5 @@ curl -o systemconfig.json https://raw.githubusercontent.com/nuclias-connect/conn
 cd $TMP_NUCLIAS_CONNECT
 echo -e "\033[32m--- Download Complete\033[0m"
 echo " "
-echo -e "\033[36m--- STEP2: Install Nuclias Connect---\033[0m"
-echo -e "\033[36m--- Change current working directory to /tmp/nucilas_connect,and run init.sh 
-          #  cd /tmp/nuclias_connect
-          #  . init.sh
-          \033[0m"
 
-#sudo sh $TMP_NUCLIAS_CONNECT"/init.sh"
+sudo sh $TMP_NUCLIAS_CONNECT"/init.sh "$user $pwd
