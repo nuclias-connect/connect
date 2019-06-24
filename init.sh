@@ -1,5 +1,6 @@
 #!/usr/bin/env sh
-
+name=$1
+pwd1=$2
 web_port=30001
 core_port=8443
 SHELL_FOLDER=$(cd "$(dirname "$0")";pwd)
@@ -197,31 +198,13 @@ echo -e "\033[32mcheck file finished\033[0m"
 echo -e "\033[32mall check_job finished\033[0m"
 echo ""
 echo -e "\033[36mNow initial set the database administrator account for Nuclias Connect\033[0m"
-read -p "please confirm is the first time set administrator account? [y/n]:" k
-echo $k
-if [ "$k" = "y" ];then
-	read -p "User Name：" name
-	if [ -n "$name" ]; then 
-		read -p "Password：" pwd1
-		if [ -n "$pwd1" ]; then
-				read -p "Confirm Password：" pwd2
-				if [ "$pwd1" != "$pwd2" ]; then
-					echo -e "\033[31mConfirm password is not consistent\033[0m"
-					exit 1
-				else
-					sed -i "5c db.createUser({user:'"$name"', pwd:'"$pwd1"', roles:[{role:'root',db:'admin'}]});" $SHELL_FOLDER"/entrypoint-initdb.sh"
-					sed -i "6c db.auth('"$name"','"$pwd1"');" $SHELL_FOLDER"/entrypoint-initdb.sh"
-				fi
-		else
-			echo -e "\033[31mThe input password is empty\033[0m"
-			exit 1
-		fi
-	else
-		echo -e "\033[31mThe input user name is empty\033[0m"
-		exit 1
-	fi
-fi
 
+if [ -n "$name" ]; then 
+  if [ -n "$pwd1" ]; then
+	sed -i "5c db.createUser({user:'"$name"', pwd:'"$pwd1"', roles:[{role:'root',db:'admin'}]});" $SHELL_FOLDER"/entrypoint-initdb.sh"
+	sed -i "6c db.auth('"$name"','"$pwd1"');" $SHELL_FOLDER"/entrypoint-initdb.sh"
+  fi
+fi
 
 docker-compose up -d
 echo -e "\033[32mNuclias Connect services are running...\033[0m"
