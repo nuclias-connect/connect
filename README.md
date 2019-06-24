@@ -14,12 +14,10 @@ Running Nuclias Connect by using docker compose.
 ### Ubuntu
 
 ```bash
-STEP1 :Download config files
 
 curl -L https://raw.githubusercontent.com/nuclias-connect/connect/dev/install.sh | sudo sh
 
-STEP2: Install Nuclias Connect
-
-cd /tmp/nuclias_connect
-sudo sh init.sh
+if want use customer user name and pawwsord for mongodb, you should add parameters 
+ curl -L https://raw.githubusercontent.com/nuclias-connect/connect/dev/install.sh | sudo sh -s [name] [pwd]
+ 
 ```
