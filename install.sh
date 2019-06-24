@@ -4,7 +4,7 @@ pwd1=$2
 if [ -n "$name" ]; then 
   if [ -n "$pwd1" ]; then
 echo ""
-else echo "please input pwd for mongodb"
+else echo "If input username, you should also please input assword for mongodb"
  exit 1
   fi
 fi
@@ -17,7 +17,7 @@ fi
 cd $TMP_NUCLIAS_CONNECT
 echo " "
 
-echo -e "\033[36m---STEP1: Download config files---\033[0m"
+echo -e "\033[36m--- Download config files---\033[0m"
 echo " "
 curl -o init.sh https://raw.githubusercontent.com/nuclias-connect/connect/dev/init.sh
 curl -o docker-compose.yml https://raw.githubusercontent.com/nuclias-connect/connect/dev/docker-compose.yml
