@@ -1,6 +1,13 @@
 #!/bin/bash
-user=$1
-pwd=$2
+name=$1
+pwd1=$2
+if [ -n "$name" ]; then 
+  if [ -n "$pwd1" ]; then
+echo ""
+else echo "please input pwd for mongodb"
+ exit 1
+  fi
+fi
 TMP_NUCLIAS_CONNECT=/tmp/nuclias_connect
 TMP_NUCLIAS_CONNECT_config=/tmp/nuclias_connect/config
 if [ ! -d $TMP_NUCLIAS_CONNECT ];then
@@ -25,4 +32,4 @@ cd $TMP_NUCLIAS_CONNECT
 echo -e "\033[32m--- Download Complete\033[0m"
 echo " "
 
-sudo sh $TMP_NUCLIAS_CONNECT"/init.sh "$user $pwd
+sudo sh $TMP_NUCLIAS_CONNECT"/init.sh "$name $pwd1
