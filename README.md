@@ -17,7 +17,7 @@ Running Nuclias Connect by using docker compose.
 
 curl -L https://raw.githubusercontent.com/nuclias-connect/connect/dev/install.sh | sudo sh
 
-if want use customer user name and pawwsord for mongodb, you should add parameters 
+ To customize user name and pawwsord for mongodb, you should add parameters 
  curl -L https://raw.githubusercontent.com/nuclias-connect/connect/dev/install.sh | sudo sh -s [name] [pwd]
  
 ```
