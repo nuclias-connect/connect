@@ -194,6 +194,7 @@ if [ ! -d $SHELL_FOLDER"/log/web/logs" ]; then
 			mkdir $SHELL_FOLDER"/log/web/logFiles"
 		fi
 fi
+sed -i "3c \  \"nucliasPath\":\""$SHELL_FOLDER"\"," $SHELL_FOLDER"/config/systemconfig.json"
 echo -e "\033[32mcheck file finished\033[0m"
 echo -e "\033[32mall check_job finished\033[0m"
 echo ""
