@@ -1,55 +1,62 @@
 version: '3'
 services:
-  config:
-    container_name: connect-config
-    image: nuclias/connect-config
-    volumes:
-      - connect-config-volume:/etc/connect
-      - connect-log-volume:/var/log/connect
-  mongo:
-    container_name: connect-mongo
-    image: nuclias/connect-mongo:latest
-    restart: always
+  DB:
+    container_name: mongo
+    image: 'mongo:3.6.11'
+#    restart: 'always'
     ports:
-      - "27010:27010"
+      - '27010:27010'
     volumes:
-      - connect-mongo-volume:/data/db
-      - connect-config-volume:/etc/connect
-    environment:
-      - MONGO_INITDB_ROOT_USERNAME=admin
-      - MONGO_INITDB_ROOT_PASSWORD=admin
-    depends_on:
-      - config
-    command: mongod --bind_ip_all --port 27010 --auth
-  core:
-    container_name: connect-core
-    image: nuclias/connect-core
-    restart: always
+      - 'MONGO-DATA:/data/db'
+      - '/etc/localtime:/etc/localtime'
+      - './entrypoint-initdb.sh:/docker-entrypoint-initdb.d/entrypoint-initdb.sh'
+    network_mode: host
+#    environment:
+#      - MONGO_INITDB_ROOT_USERNAME=admin
+#      - MONGO_INITDB_ROOT_PASSWORD=admin
+    command: 'mongod --port 27010  --auth'
+ 
+  CORE:
+#    environment:
+#      - NODE_ENV=Production_hualian
+    container_name: nuclias_connect_core 
+    image: 'nuclias/nuclias_connect_core:1.0.0.40'
+    restart: 'always'
     ports:
       - '8443:8443'
       - '62992:62992'
     volumes:
-      - connect-config-volume:/etc/connect
-      - connect-log-volume:/var/log/connect
+      - './appconfig.json:/app/config/appconfig.json'
+#      - './dbConfig.js:/app/node_modules/DView-SP1-common/db/dbConfig.js'
+      - './log/core/logFiles:/app/logFiles'
+      - '/etc/localtime:/etc/localtime'
+    network_mode: host
     depends_on:
-      - mongo
-    command: sh -c "ln -sf /etc/connect/appconfig.json /app/config/appconfig.json && ln -sf /var/log/connect/core /app/logFiles && ./nc-core"
+      - DB
+    command: './nuclias_connect_core'
     privileged: true
-  web:
-    container_name: connect-web
-    image: 'nuclias/connect-web'
+
+  WEB:
+#    environment:
+#      - NODE_ENV=Production_hualian
+    container_name: nuclias_connect_web
+    image: 'nuclias/nuclias_connect_web:1.0.0.40'
     restart: 'always'
     ports:
       - '30001:30001'
     volumes:
-      - connect-config-volume:/etc/connect
-      - connect-log-volume:/var/log/connect
+      - './config/systemconfig.json:/app/config/systemconfig.json'
       - './customer:/app/customer'
+#      - './dbConfig.js:/app/node_modules/DView-SP1-common/db/dbConfig.js'
+      - './log/web/logFiles:/app/logFiles'
+      - '/etc/localtime:/etc/localtime'
+    network_mode: host
     depends_on:
-      - core
-    command: sh -c "ln -sf /etc/connect/systemconfig.json /app/config/systemconfig.json && ln -sf /var/log/connect/web /app/logFiles && ./nc-web"
+      - CORE
+    command: './nuclias_connect_web'
     privileged: true 
+
 volumes:
-  connect-config-volume:
-  connect-mongo-volume:
-  connect-log-volume:
+  MONGO-DATA:
+
+
