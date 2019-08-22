@@ -8,8 +8,8 @@ else echo "If input username, you should also please input assword for mongodb"
  exit 1
   fi
 fi
-TMP_NUCLIAS_CONNECT=/tmp/nuclias_connect
-TMP_NUCLIAS_CONNECT_config=/tmp/nuclias_connect/config
+TMP_NUCLIAS_CONNECT=/usr/local/nuclias_connect
+TMP_NUCLIAS_CONNECT_config=/usr/local/nuclias_connect/config
 if [ ! -d $TMP_NUCLIAS_CONNECT ];then
   mkdir -p $TMP_NUCLIAS_CONNECT
 fi
