@@ -6,5 +6,9 @@
         "serverIP": "127.0.0.1",
         "serverPort": 27010,
         "useAuth": true
+    },
+    "log": {
+            "logLevel": "info",
+            "filename": "nuclias_connect_core.log"
     }
 }

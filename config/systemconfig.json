@@ -1,6 +1,11 @@
 {
   "version":"1.0.1",
   "nucliasPath":"",
+  "model":"DNC-100",
+  "log": {
+          "logLevel": "info",
+          "filename": "nuclias_connect_web.log"
+  },
   "development":{
     "enableHttp":false,
     "serverIP":"",
