@@ -2,10 +2,15 @@ version: '3'
 services:
   DB:
     container_name: mongo
-    image: 'mongo:3.6.11'
-#    restart: 'always'
-    ports:
-      - '27010:27010'
+    image: 'mongo:4.0.17'
+    restart: 'always'
+    logging:
+        driver: "json-file"
+        options:
+            max-size: "50m"
+            max-file: "5"
+#    ports:
+#      - '27010:27010'
     volumes:
       - 'MONGO-DATA:/data/db'
       - '/etc/localtime:/etc/localtime'
@@ -20,12 +25,18 @@ services:
 #    environment:
 #      - NODE_ENV=Production_hualian
     container_name: nuclias_connect_core 
-    image: 'nuclias/nuclias_connect_core'
+    image: 'nuclias/nuclias_connect_core:1.2.0'
     restart: 'always'
-    ports:
-      - '8443:8443'
-      - '62992:62992'
+    logging:
+        driver: "json-file"
+        options:
+            max-size: "50m"
+            max-file: "5"
+#    ports:
+#      - '8443:8443'
+#      - '62992:62992'
     volumes:
+      - './config/systemconfig.json:/app/config/systemconfig.json'
       - './appconfig.json:/app/config/appconfig.json'
 #      - './dbConfig.js:/app/node_modules/DView-SP1-common/db/dbConfig.js'
       - './log/core/logFiles:/app/logFiles'
@@ -40,10 +51,15 @@ services:
 #    environment:
 #      - NODE_ENV=Production_hualian
     container_name: nuclias_connect_web
-    image: 'nuclias/nuclias_connect_web'
+    image: 'nuclias/nuclias_connect_web:1.2.0'
     restart: 'always'
-    ports:
-      - '30001:30001'
+    logging:
+        driver: "json-file"
+        options:
+            max-size: "50m"
+            max-file: "5"
+#    ports:
+#      - '30001:30001'
     volumes:
       - './config/systemconfig.json:/app/config/systemconfig.json'
       - './customer:/app/customer'

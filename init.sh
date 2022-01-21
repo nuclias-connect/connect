@@ -61,6 +61,16 @@ elif [ "$(expr substr $(uname -s) 1 5)" = "Linux" ]; then
         iptables -A INPUT -p tcp --dport $core_port -j ACCEPT
     elif grep -Eqi "Ubuntu" /etc/issue || grep -Eq "Ubuntu" /etc/*-release; then
         DISTRO='Ubuntu'
+        Check_Versions=`sudo cat /etc/*-release |grep DISTRIB_RELEASE |cut -c 17-21`
+		if [ `echo "$Check_Versions < 20.04" |bc` -eq 1 ]
+			then
+				echo -e "\033[32mThe current version is lower than version 20.04: Please update to the specified version and above and try again.[y/n] \033[0m"
+				read k
+				if [ "$k" = "y" ]
+					then
+					exit 1	
+				fi
+		fi
         ufw allow $web_port/tcp
         ufw allow $core_port/tcp
         ufw reload
@@ -86,6 +96,35 @@ else
 	if [ "$SYS" = "OS X" ]
 		then echo -e "\033[31mno found docker. please install docker-for-mac before\033[0m"
 		exit 1
+	elif [ "$DISTRO" = "Ubuntu" ]; then	
+		echo -e "\033[32mDo you want to install docker?[y/n]\033[0m"
+		read k
+		if [ "$k" = "y" ]
+			then
+			sudo apt-get update
+			sudo apt-get install \
+    apt-transport-https \
+    ca-certificates \
+    curl \
+    gnupg-agent \
+    software-properties-common
+			sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+			sudo add-apt-repository \
+   "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+   $(lsb_release -cs) \
+   stable"
+			sudo apt-get update
+			sudo apt-get install docker-ce docker-ce-cli containerd.io	
+			sudo systemctl enable docker
+			check_docker=`docker -v`
+			if [ "$check_docker" ] 
+				then 
+				echo -e "\033[32mdocker installation is complete\033[0m"
+				echo -e "\033[32m$check_docker\033[0m"
+			fi
+		else
+			exit 1
+		fi
 	elif [ "$SYS" = "Linux" ]; then
 		echo -e "\033[31mno found docker. please install docker before\033[0m"
 		exit 1
@@ -106,8 +145,22 @@ if [ "$check_docker_compose" ]
 else
 	# echo "start install docker-compose"
 	echo "not found docker-compose"
-	exit 1
-	# @ todo install docker compose
+	echo -e "\033[32mDo you want to install docker-compose?[y/n]\033[0m"
+	read k
+		if [ "$k" = "y" ]
+			then
+			sudo curl -L "https://github.com/docker/compose/releases/download/1.27.4/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+			sudo chmod +x /usr/local/bin/docker-compose
+			docker-compose --version
+			check_docker_compose=`docker-compose -v`
+			if [ "$check_docker_compose" ]
+				then 
+				echo -e "\033[32mdocker-compose installation is complete\033[0m"
+				echo -e "\033[32m$check_docker_compose\033[0m"
+			fi			
+		else
+			exit 1
+		fi	# @ todo install docker compose
 fi
 echo -e "\033[32mdocker-compose installed\033[0m"
 

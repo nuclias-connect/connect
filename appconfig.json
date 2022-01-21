@@ -8,7 +8,7 @@
         "useAuth": true
     },
     "log": {
-            "logLevel": "info",
-            "filename": "nuclias_connect_core.log"
+        "logLevel":"info",
+        "filename": "nuclias_connect_core.log"
     }
 }

@@ -1,11 +1,12 @@
 {
-  "version":"1.0.1",
-  "nucliasPath":"",
+  "version":"1.2.0.5",
+  "nucliasPath":"/usr/local/nuclias_connect",
   "model":"DNC-100",
   "log": {
-          "logLevel": "info",
-          "filename": "nuclias_connect_web.log"
+    "logLevel":"info",
+    "filename": "nuclias_connect_web.log"
   },
+  "doNotLogOutWhenRestart":false,
   "development":{
     "enableHttp":false,
     "serverIP":"",
@@ -21,8 +22,18 @@
       "serverIP": "127.0.0.1",
       "serverPort": 27010,
       "useAuth": true
-    }
-
+    },
+    "fota": {
+      "host_gl": "https://api.fota.dlink.com",
+      "host_cn": "https://api.fota.dlink.com.cn"
+    },
+    "sso": {
+      "hostname": "API.nuclias.com",
+      "tokenExpiresInMinutes": 4320,
+      "register": "register.nuclias.com",
+      "connect": "connect.nuclias.com"
+    },
+    "switchSeries": ["DGS-1210"]
   },
   "Production_hualian":{
     "enableHttp":true,
@@ -39,7 +50,18 @@
       "serverIP": "127.0.0.1",
       "serverPort": 27010,
       "useAuth": true
-    }
+    },
+    "fota": {
+      "host_gl": "https://api.fota.dlink.com",
+      "host_cn": "https://api.fota.dlink.com.cn"
+    },
+    "sso": {
+      "hostname": "API.nuclias.com",
+      "tokenExpiresInMinutes": 4320,
+      "register": "register.nuclias.com",
+      "connect": "connect.nuclias.com"
+    },
+    "switchSeries": ["DGS-1210"]
   },
   "production":{
     "enableHttp":true,
@@ -50,6 +72,22 @@
     "jwt_secret":"b3eaad0a469d13a884f3d09e0952b72b",
     "client":"*",
     "taskValidity":30,
-    "supportModuleUrl":" https://s3-us-west-1.amazonaws.com/download-site/download-file/cwm_aplist"
+    "supportModuleUrl":" https://s3-us-west-1.amazonaws.com/download-site/download-file/cwm_aplist",
+    "mongodb": {
+      "serverIP": "127.0.0.1",
+      "serverPort": 27010,
+      "useAuth": true
+    },
+    "fota": {
+      "host_gl": "https://api.fota.dlink.com",
+      "host_cn": "https://api.fota.dlink.com.cn"
+    },
+    "sso": {
+      "hostname": "API.nuclias.com",
+      "tokenExpiresInMinutes": 4320,
+      "register": "register.nuclias.com",
+      "connect": "connect.nuclias.com"
+    },
+    "switchSeries": ["DGS-1210"]
   }
 }
