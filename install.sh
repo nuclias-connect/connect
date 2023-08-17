@@ -4,7 +4,7 @@ pwd1=$2
 if [ -n "$name" ]; then 
   if [ -n "$pwd1" ]; then
 echo ""
-else echo "If input username, you should also please input assword for mongodb"
+else echo "If input username, you should also please input password for mongodb"
  exit 1
   fi
 fi
